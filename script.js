@@ -17,7 +17,8 @@ const GameBoard = (function () {
     let boardHTML = "";
 
     gameboard.forEach((el, i) => {
-      boardHTML += `<div id="board-${i}" class="board">${el}</div>`;
+      let className = el === "x" ? "board-x" : el === "o" ? "board-o" : "";
+      boardHTML += `<div id="board-${i}" class="board ${className}">${el}</div>`;
     });
     document.querySelector("#gameboard").innerHTML = boardHTML;
   };

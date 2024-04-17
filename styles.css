@@ -67,7 +67,15 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  font-size: 3.8rem;
+}
+
+.board-x {
+  color: #f2b138;
+}
+
+.board-o {
+  color: #34a9db;
 }
 
 .restart {
