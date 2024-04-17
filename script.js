@@ -23,16 +23,16 @@ const GameBoard = (function () {
   };
 
   const update = (index, value) => {
-    if (gameboard[index] === "") {
-      gameboard[index] = value;
-      renderGame();
-      GameController.togglePlayer();
-    }
+    gameboard[index] = value;
+    renderGame();
   };
+
+  const getGameBoard = () => gameboard;
 
   return {
     renderGame,
     update,
+    getGameBoard,
   };
 })();
 
@@ -59,12 +59,6 @@ const GameController = (function () {
     addClickEventListeners();
   };
 
-  const restartGame = () => {
-    players = [];
-    currentPlayerIndex = 0;
-    endGame = false;
-  };
-
   const addClickEventListeners = () => {
     // Add event listener to board
     const gameboard = document.querySelector("#gameboard");
@@ -80,8 +74,17 @@ const GameController = (function () {
     // get board index
     const index = event.target.id.split("-")[1];
 
+    //   Check if clicked board already has sign
+    if (GameBoard.getGameBoard()[index] !== "") return;
+
     // call the function to update the board
     GameBoard.update(index, players[currentPlayerIndex].move);
+    togglePlayer();
+  };
+
+  const restartGame = () => {
+    currentPlayerIndex = 0;
+    endGame = false;
   };
 
   return {
