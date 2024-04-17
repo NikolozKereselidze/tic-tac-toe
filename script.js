@@ -84,7 +84,7 @@ const GameController = (function () {
 
   const restartGame = () => {
     for (let i = 0; i < 9; i++) {
-      GameBoard.update(i, "", "restart");
+      GameBoard.update(i, "");
     }
 
     currentPlayerIndex = 0;
