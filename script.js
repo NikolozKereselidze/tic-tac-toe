@@ -49,16 +49,34 @@ const GameController = (function () {
   let endGame;
 
   const startGame = () => {
-    players = [
-      createPlayer(document.querySelector("#player1").value, "x"),
-      createPlayer(document.querySelector("#player2").value, "o"),
-    ];
+    // Get player names from input fields
+    const player1Name = document.querySelector("#player1").value;
+    const player2Name = document.querySelector("#player2").value;
+
+    // Check if player names are empty
+    if (!player1Name || !player2Name) {
+      alert("Please enter names for both players.");
+      return;
+    }
+
+    players = [createPlayer(player1Name, "x"), createPlayer(player2Name, "o")];
 
     currentPlayerIndex = 0;
     endGame = false;
     GameBoard.renderGame();
     addClickEventListeners();
     toggleStart();
+  };
+
+  const restartGame = () => {
+    for (let i = 0; i < 9; i++) {
+      GameBoard.update(i, "");
+    }
+    currentPlayerIndex = 0;
+    endGame = false;
+    toggleStart();
+    document.querySelector("#player1").value = "";
+    document.querySelector("#player2").value = "";
   };
 
   const toggleBoardHide = (el) => {
@@ -105,17 +123,6 @@ const GameController = (function () {
     }
 
     togglePlayer();
-  };
-
-  const restartGame = () => {
-    for (let i = 0; i < 9; i++) {
-      GameBoard.update(i, "");
-    }
-    currentPlayerIndex = 0;
-    endGame = false;
-    toggleStart();
-    document.querySelector("#player1").value = "";
-    document.querySelector("#player2").value = "";
   };
 
   return {
