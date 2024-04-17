@@ -35,6 +35,7 @@ svg {
 
 /* Board styles */
 body {
+  background-color: #1a2b33;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -42,19 +43,47 @@ body {
   align-items: center;
 }
 
+.main-heading {
+  color: #a9bec8;
+}
+
 #gameboard {
-  min-width: 300px;
-  min-height: 300px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   justify-items: center;
   gap: 14px;
+  opacity: 0;
 }
 
 .board {
   width: 100%;
   height: 100%;
-  background-color: brown;
+  background-color: #1e3640;
+  outline: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.2rem;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+}
+
+.restart {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.gameboard-show {
+  min-width: 300px;
+  min-height: 300px;
+  opacity: 1 !important;
+}
+
+.hidden {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
 }

@@ -79,6 +79,12 @@ const GameController = (function () {
 
     // call the function to update the board
     GameBoard.update(index, players[currentPlayerIndex].move);
+
+    if (winHandler(GameBoard.getGameBoard())) {
+      endGame = true;
+      console.log(players[currentPlayerIndex].name);
+    }
+
     togglePlayer();
   };
 
@@ -86,7 +92,6 @@ const GameController = (function () {
     for (let i = 0; i < 9; i++) {
       GameBoard.update(i, "");
     }
-
     currentPlayerIndex = 0;
     endGame = false;
   };
@@ -98,6 +103,28 @@ const GameController = (function () {
     togglePlayer,
   };
 })();
+
+function winHandler(board) {
+  const winningCombinations = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+
+  for (let i = 0; i < winningCombinations.length; i++) {
+    const [a, b, c] = winningCombinations[i];
+    if (board[a]) {
+      if (board[a] === board[b] && board[b] === board[c]) {
+        return true;
+      }
+    }
+  }
+}
 
 startButton.addEventListener("click", GameController.startGame);
 restartButton.addEventListener("click", GameController.restartGame);
