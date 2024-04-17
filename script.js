@@ -23,8 +23,11 @@ const GameBoard = (function () {
   };
 
   const update = (index, value) => {
-    gameboard[index] = value;
-    renderGame();
+    if (gameboard[index] === "") {
+      gameboard[index] = value;
+      renderGame();
+      GameController.togglePlayer();
+    }
   };
 
   return {
@@ -79,13 +82,13 @@ const GameController = (function () {
 
     // call the function to update the board
     GameBoard.update(index, players[currentPlayerIndex].move);
-    togglePlayer();
   };
 
   return {
     startGame,
     restartGame,
     handleClick,
+    togglePlayer,
   };
 })();
 
