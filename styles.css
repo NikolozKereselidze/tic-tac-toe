@@ -52,7 +52,6 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   justify-items: center;
-  gap: 14px;
   opacity: 0;
 }
 
@@ -80,10 +79,15 @@ body {
   min-width: 300px;
   min-height: 300px;
   opacity: 1 !important;
+  gap: 14px;
 }
 
 .hidden {
   display: none;
   visibility: hidden;
   opacity: 0;
+}
+
+.controls > label {
+  color: #a9bec8;
 }
