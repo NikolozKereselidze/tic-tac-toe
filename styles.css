@@ -68,6 +68,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 3.8rem;
+  text-transform: uppercase;
 }
 
 .board-x {
@@ -133,4 +134,9 @@ body {
 
 #restart-button {
   margin-top: 1.4rem;
+}
+
+.winner {
+  background-color: #f2b138;
+  color: #1e3640;
 }

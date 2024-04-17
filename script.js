@@ -16,8 +16,13 @@ const GameBoard = (function () {
   const renderGame = () => {
     let boardHTML = "";
 
+    const winningCombination = winHandler(gameboard);
+
     gameboard.forEach((el, i) => {
       let className = el === "x" ? "board-x" : el === "o" ? "board-o" : "";
+      if (winningCombination && winningCombination.includes(i)) {
+        className += ` winner`;
+      }
       boardHTML += `<div id="board-${i}" class="board ${className}">${el}</div>`;
     });
     document.querySelector("#gameboard").innerHTML = boardHTML;
@@ -118,9 +123,9 @@ const GameController = (function () {
     // call the function to update the board
     GameBoard.update(index, players[currentPlayerIndex].move);
 
-    if (winHandler(GameBoard.getGameBoard())) {
+    const winningCombination = winHandler(GameBoard.getGameBoard());
+    if (winningCombination) {
       endGame = true;
-      console.log(players[currentPlayerIndex].name);
     }
 
     togglePlayer();
@@ -150,7 +155,7 @@ function winHandler(board) {
     const [a, b, c] = winningCombinations[i];
     if (board[a]) {
       if (board[a] === board[b] && board[b] === board[c]) {
-        return true;
+        return winningCombinations[i];
       }
     }
   }
