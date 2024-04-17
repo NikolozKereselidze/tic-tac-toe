@@ -14,20 +14,22 @@ const GameBoard = (function () {
   }
 
   const renderGame = () => {
-    let boardHTML = [];
+    let boardHTML = "";
 
     gameboard.forEach((el, i) => {
-      const boardDiv = document.createElement("div");
-      boardDiv.setAttribute("id", `board-${i}`);
-      boardDiv.className = "board";
-      boardDiv.innerHTML = `${el}`;
-      boardHTML.push(boardDiv);
-      document.querySelector("#gameboard").appendChild(boardDiv); // Append the boardDiv to the gameboard div
+      boardHTML += `<div id="board-${i}" class="board">${el}</div>`;
     });
+    document.querySelector("#gameboard").innerHTML = boardHTML;
+  };
+
+  const update = (index, value) => {
+    gameboard[index] = value;
+    renderGame();
   };
 
   return {
     renderGame,
+    update,
   };
 })();
 
@@ -48,7 +50,10 @@ const GameController = (function () {
       createPlayer(document.querySelector("#player1").value, "x"),
       createPlayer(document.querySelector("#player2").value, "o"),
     ];
+    currentPlayerIndex = 0;
+    endGame = false;
     GameBoard.renderGame();
+    addClickEventListeners();
   };
 
   const restartGame = () => {
@@ -57,9 +62,30 @@ const GameController = (function () {
     endGame = false;
   };
 
+  const addClickEventListeners = () => {
+    // Add event listener to board
+    const gameboard = document.querySelector("#gameboard");
+    gameboard.addEventListener("click", handleClick);
+  };
+
+  const togglePlayer = () => {
+    // toggle player index
+    currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
+  };
+
+  const handleClick = (event) => {
+    // get board index
+    const index = event.target.id.split("-")[1];
+
+    // call the function to update the board
+    GameBoard.update(index, players[currentPlayerIndex].move);
+    togglePlayer();
+  };
+
   return {
     startGame,
     restartGame,
+    handleClick,
   };
 })();
 
