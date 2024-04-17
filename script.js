@@ -87,6 +87,9 @@ const GameController = (function () {
   };
 
   const handleClick = (event) => {
+    // Disable click events when endGame is true
+    if (endGame) return;
+
     // get board index
     const index = event.target.id.split("-")[1];
 
