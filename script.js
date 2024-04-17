@@ -53,10 +53,26 @@ const GameController = (function () {
       createPlayer(document.querySelector("#player1").value, "x"),
       createPlayer(document.querySelector("#player2").value, "o"),
     ];
+
     currentPlayerIndex = 0;
     endGame = false;
     GameBoard.renderGame();
     addClickEventListeners();
+    toggleStart();
+  };
+
+  const toggleBoardHide = (el) => {
+    el.classList.toggle("gameboard-show");
+  };
+
+  const toggleButtonHide = (el) => {
+    el.classList.toggle("hidden");
+  };
+
+  const toggleStart = () => {
+    toggleBoardHide(document.querySelector("#gameboard"));
+    toggleButtonHide(restartButton);
+    toggleButtonHide(document.querySelector(".controls"));
   };
 
   const addClickEventListeners = () => {
@@ -94,6 +110,9 @@ const GameController = (function () {
     }
     currentPlayerIndex = 0;
     endGame = false;
+    toggleStart();
+    document.querySelector("#player1").value = "";
+    document.querySelector("#player2").value = "";
   };
 
   return {
