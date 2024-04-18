@@ -1,25 +1,31 @@
 "use strict";
 
+// Import start and restart buttons
 const startButton = document.querySelector("#start-button");
 const restartButton = document.querySelector("#restart-button");
 
+// GameBoard module
 const GameBoard = (function () {
   // Define gameboard size
   const boardSize = 3 * 3;
 
-  //   create gameboard array and push elements to it
+  // Create gameboard array and initialize with empty strings
   let gameboard = [];
   for (let i = 0; i < boardSize; i++) {
     gameboard.push("");
   }
 
+  // Render the gameboard to the DOM
   const renderGame = () => {
     let boardHTML = "";
 
+    // Check for winning combination
     const winningCombination = winHandler(gameboard);
 
     gameboard.forEach((el, i) => {
       let className = el === "x" ? "board-x" : el === "o" ? "board-o" : "";
+
+      // Add winner class if the board is part of the winning combination
       if (winningCombination && winningCombination.includes(i)) {
         className += ` winner`;
       }
@@ -28,6 +34,7 @@ const GameBoard = (function () {
     document.querySelector("#gameboard").innerHTML = boardHTML;
   };
 
+  // Update the gameboard array and re-render
   const update = (index, value) => {
     gameboard[index] = value;
     renderGame();
@@ -42,6 +49,7 @@ const GameBoard = (function () {
   };
 })();
 
+// Create player objects
 const createPlayer = (name, move) => {
   return {
     name,
@@ -49,11 +57,13 @@ const createPlayer = (name, move) => {
   };
 };
 
+// GameController module
 const GameController = (function () {
   let players = [];
   let currentPlayerIndex;
   let endGame;
 
+  // Start the game
   const startGame = () => {
     // Get player names from input fields
     const player1Name = document.querySelector("#player1").value;
@@ -74,7 +84,9 @@ const GameController = (function () {
     toggleStart();
   };
 
+  // Restart the game
   const restartGame = () => {
+    // Clear the gameboard and player inputs
     for (let i = 0; i < 9; i++) {
       GameBoard.update(i, "");
     }
@@ -85,42 +97,42 @@ const GameController = (function () {
     document.querySelector("#player2").value = "";
   };
 
+  // Toggle the gameboard visibility
   const toggleBoardHide = (el) => {
     el.classList.toggle("gameboard-show");
   };
 
+  // Toggle button visibility
   const toggleButtonHide = (el) => {
     el.classList.toggle("hidden");
   };
 
+  // Toggle the game start
   const toggleStart = () => {
     toggleBoardHide(document.querySelector("#gameboard"));
     toggleButtonHide(restartButton);
     toggleButtonHide(document.querySelector(".controls"));
   };
 
+  // Add click event listeners to the gameboard
   const addClickEventListeners = () => {
-    // Add event listener to board
     const gameboard = document.querySelector("#gameboard");
     gameboard.addEventListener("click", handleClick);
   };
 
+  // Toggle the current player
   const togglePlayer = () => {
-    // toggle player index
     currentPlayerIndex = currentPlayerIndex === 0 ? 1 : 0;
   };
 
+  // Handle the click event on the gameboard
   const handleClick = (event) => {
-    // Disable click events when endGame is true
     if (endGame) return;
 
-    // get board index
     const index = event.target.id.split("-")[1];
 
-    //   Check if clicked board already has sign
     if (GameBoard.getGameBoard()[index] !== "") return;
 
-    // call the function to update the board
     GameBoard.update(index, players[currentPlayerIndex].move);
 
     const winningCombination = winHandler(GameBoard.getGameBoard());
@@ -139,6 +151,7 @@ const GameController = (function () {
   };
 })();
 
+// Check for winning combinations
 function winHandler(board) {
   const winningCombinations = [
     [0, 1, 2],
@@ -161,5 +174,6 @@ function winHandler(board) {
   }
 }
 
+// Event listeners for start and restart buttons
 startButton.addEventListener("click", GameController.startGame);
 restartButton.addEventListener("click", GameController.restartGame);
