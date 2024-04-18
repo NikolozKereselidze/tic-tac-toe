@@ -140,6 +140,11 @@ const GameController = (function () {
       endGame = true;
     }
 
+    const draw = drawHandler(GameBoard.getGameBoard());
+    if (draw && !winningCombination) {
+      alert("It's a draw!");
+    }
+
     togglePlayer();
   };
 
@@ -150,6 +155,16 @@ const GameController = (function () {
     togglePlayer,
   };
 })();
+
+function drawHandler(board) {
+  let draw = true;
+  board.forEach((el) => {
+    if (!el) {
+      draw = false;
+    }
+  });
+  return draw;
+}
 
 // Check for winning combinations
 function winHandler(board) {
